@@ -3,13 +3,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using LibraryService.WebAPI.Data;
 using LibraryService.WebAPI.Services;
-using System;
 using Microsoft.AspNetCore.Authorization;
 
 namespace LibraryService.WebAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "admin")]
     public class LibrariesController : ControllerBase
     {
         private readonly ILibrariesService _librariesService;
@@ -20,7 +20,6 @@ namespace LibraryService.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> GetAll()
         {
             var libraries = await _librariesService.Get(null);
@@ -31,8 +30,10 @@ namespace LibraryService.WebAPI.Controllers
         public async Task<IActionResult> Get(int libraryId)
         {
             var library = (await _librariesService.Get(new[] { libraryId })).FirstOrDefault();
+
             if (library == null)
                 return NotFound();
+
             return Ok(library);
         }
 
@@ -47,6 +48,7 @@ namespace LibraryService.WebAPI.Controllers
         public async Task<IActionResult> Update(int libraryId, Library library)
         {
             var existingLibrary = (await _librariesService.Get(new[] { libraryId })).FirstOrDefault();
+
             if (existingLibrary == null)
                 return NotFound();
 

@@ -4,20 +4,26 @@ namespace HackerRank1.Services;
 
 public interface IAuthenticationService
 {
-    Task<User> AuthenticateAsync(string email, string password);
+    Task<User?> AuthenticateAsync(string email, string password);
 }
 
 public class AuthenticationService : IAuthenticationService
 {
-
-    public async Task<User> AuthenticateAsync(string email, string password)
+    public async Task<User?> AuthenticateAsync(string email, string password)
     {
+        await Task.CompletedTask;
+
         if (email == "admin" && password == "1234")
         {
-            return new User() { Id = 1, Email = email, Password = password, Role = "admin" };
+            return new User
+            {
+                Id = 1,
+                Email = email,
+                Password = password,
+                Role = "admin"
+            };
         }
 
         return null;
     }
-
 }
