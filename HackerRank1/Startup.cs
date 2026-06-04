@@ -74,7 +74,8 @@ namespace LibraryService.WebAPI
                             "http://localhost:5173",
                             "https://localhost:5173",
                             "http://localhost:5175",
-                            "https://localhost:5175"
+                            "https://localhost:5175",
+                            "https://investigacion2josh.netlify.app"
                         )
                         .AllowAnyHeader()
                         .AllowAnyMethod()
