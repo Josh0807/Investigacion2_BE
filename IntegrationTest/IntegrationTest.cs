@@ -7,6 +7,7 @@ using FluentAssertions;
 using LibraryService.WebAPI;
 using LibraryService.WebAPI.Data;
 using LibraryService.WebAPI.DTO;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -35,9 +36,15 @@ namespace LibraryService.Tests
                         .EnableSensitiveDataLogging()
                         .Options);
             Client = _factory.WithWebHostBuilder(builder =>
-                builder.UseStartup<Startup>()
-                .ConfigureServices(services =>
+                builder.ConfigureTestServices(services =>
                 {
+                    services.AddAuthentication(options =>
+                    {
+                        options.DefaultAuthenticateScheme = "Test";
+                        options.DefaultChallengeScheme = "Test";
+                    }).AddScheme<AuthenticationSchemeOptions, TestAuthHandler>("Test", _ => { });
+
+                    services.RemoveAll(typeof(DbContextOptions<LibraryContext>));
                     services.RemoveAll(typeof(LibraryContext));
                     services.AddSingleton(context);
 

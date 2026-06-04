@@ -91,7 +91,7 @@ namespace LibraryService.WebAPI
                 options.UseInMemoryDatabase("librarydb")
             );
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
 
             // 8. Configurar Swagger con soporte para JWT
             services.AddSwaggerGen(c =>

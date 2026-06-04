@@ -8,10 +8,10 @@ public class BookForm
     public int Id { get; set; }
 
     [JsonProperty("name")]
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
     [JsonProperty("category")]
-    public string Category { get; set; }
+    public string? Category { get; set; }
 
     [JsonProperty("libraryId")]
     public int LibraryId { get; set; }
